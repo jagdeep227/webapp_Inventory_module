@@ -1,0 +1,55 @@
+{% extends 'base_customer.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:20%;margin:auto;
+          vertical-align: middle;background-color: lightslategray; 
+           border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+           padding: 40px;
+        }
+        label{
+		display: inline-block;
+		text-align: right;
+		float: left;
+	}
+
+	 .form input,input{
+		display: inline-block;
+		text-align: left;
+        float:right;
+        width:50%;
+	}
+
+</style>
+<div class="div2"> 
+<body>
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <h1>Update Customer.</h1>
+        <hr>
+        <a>Name</a>
+        <input  type="text" name="name" value="{{customer.name}}" />        
+        <br><br>        
+        <a>Email</a>
+        <input  type="text" name="email1" value="{{customer.email1}}" />        
+        <br><br>    
+          
+        <a>Address</a>
+        <input  type="text" name="address" value="{{customer.address}}" />        
+        <br><br>   
+        <button type="submit" class="registerbtn">Update</button>
+      </div>
+    
+      
+      {{form.errors}}
+</form>
+</body>
+</div>
+</html>
+
+{% endblock%}

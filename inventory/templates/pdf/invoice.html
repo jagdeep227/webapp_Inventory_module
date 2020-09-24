@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html>
+    <head>
+        <title>INVOICE for Adding Stock</title>
+        <style type="text/css">
+        table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid black;
+      
+      width: 60%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      border: 1.1px solid black;
+
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                INVOICE for Adding Stock<br>
+                <p class='title'>Invoice : {{ invoice_id }} </p>
+            </div>
+        <div>
+        <div class='details'>
+            Customer name: {{ customer_name }}<br/>
+            Customer username: {{ customer_username }}<br/>
+            Employee: {{ employee }}   <br/>         
+            Date-Time: {{ today }}
+            <table>
+                <tr>
+                    <td>product Name</td>
+                    <td>product Variety</td>
+                    <td>product Quantity</td>                    
+                    <td>product Quantity type</td>                    
+                </tr>
+            
+                {% for i in prods %}
+                <tr>
+                    <td>{{i.name}}</td>                    
+                    <td>{{i.variety_name}}</td>
+                    <td>{{i.quantity}}</td>
+                    <td>{{i.quant_type}}</td>
+                   
+                </tr>
+                {% endfor %}
+            </table>
+            <hr class='hrItem' />
+        </div>
+    </div>
+    </body>
+</html>

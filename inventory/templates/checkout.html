@@ -1,0 +1,69 @@
+{% extends 'base_customer.html' %}
+
+{% block content %}
+<style>
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:25%;margin:auto;
+          vertical-align: middle;background-color: lightslategray; 
+           border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+           padding: 40px;
+        }
+        label{
+		display: inline-block;
+		text-align: right;
+		float: left;
+	}
+
+	 .form input,input{
+		display: inline-block;
+		text-align: left;
+        float: right;
+        width:50%;
+	}
+
+</style>
+<div class="div2"> 
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <h1>Enter Stock details </h1>
+            <hr>
+            
+
+<label>
+    <b>Name:</b></label>
+    <input name="name" type="text" list="name" autocomplete="off" />
+   
+   <datalist id="name">
+    <label>
+     or select from the list:
+     
+      {% for i in prods2 %}
+        <option>{{i.name}}</option>
+      {% endfor %}
+     
+    </label>
+   </datalist>
+   
+   
+            <br><br>
+            <label for="variety_name"><b>Variety</b></label>
+            {{form.variety_name}}
+            <br><br>            
+            <label for="quantity"><b>Quantity</b></label>
+            {{form.quantity}}
+            <br><br>            
+            <button type="submit" class="registerbtn">checkout</button>
+          </div>
+        
+          {% if message %}
+          {{message}}
+          {% endif %}
+          {{form.errors}}
+    </form>
+    </body>
+</div>
+
+
+
+{% endblock %}

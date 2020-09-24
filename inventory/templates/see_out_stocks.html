@@ -1,0 +1,139 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+
+
+    
+<style>
+
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 7px 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.info {
+  border-color: #2196F3;
+  color: dodgerblue;
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid black;
+      
+      width: 60%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      border: 1.1px solid black;
+
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    .table2 {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid rgb(172, 41, 41);
+      background-color: lightsteelblue;
+      width: 50%;
+    }
+
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+
+    </style>
+<body>
+    
+<h1>Total Stocks:  </h1>
+{% for key, values in check.items %}
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Total_quantity</th>
+        <th>quantity type</th>            
+    </tr>
+        <tr>
+            <td>{{ key.name }}</td>            
+            <td>{{key.total_quant}}</td>
+            <td>{{key.quant_type}}</td>            
+        </tr>        
+</table >
+<button onclick="myFunction('{{ key.name }}')">See Varities</button>
+<br>
+<div id="myDIV2" >
+    <div id="{{ key.name }}" style="display:none">
+    <table class="table2">
+        <tr>
+            <th>Name</th>
+            <th>variety name</th>           
+            <th>quantity</th>    
+            <th>quantity unit</th>                  
+            <th>Price per unit</th>     
+            <th>Added on: </th>      
+            <th>Owner</th>
+            <th>Checkout by employee: </th>              
+        </tr>
+        {% for j in values %}
+        <tr>
+        <td>{{j.Product_checkout.name}}</td>            
+        <td>{{j.variety_name}}</td>            
+        <td>{{j.quantity}}</td>
+        <td>{{j.Product_checkout.quant_type}}</td>                    
+        <td>{{j.price_per_unit}}</td>
+        <td>{{j.created_at}}</td>
+        <td>{{j.owner.username}}</td>
+        <td>{{j.employee_checkout.username}}</td>            
+        </tr>        
+    {% endfor %}
+    </table>
+    <br>
+    {% if  key.chck %}
+    <a class = "btn info" href="{% url 'prod_out_varities' key.product_uid %}">see more</a>
+    {% endif %}
+</div>
+</div>
+<script>
+    function myFunction(a) {
+      var a=arguments[0];
+      
+      var x = document.getElementById(a);
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+    </script>
+
+<br><br>
+{% endfor %}
+<br>
+<br>
+
+<br>
+<br>
+<br>
+
+    
+
+
+
+</body>
+
+
+
+
+{% endblock %}

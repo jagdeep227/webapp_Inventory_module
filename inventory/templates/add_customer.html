@@ -1,0 +1,67 @@
+{% extends 'base_employee.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:30%;margin:auto;
+          vertical-align: middle;background-color: lightslategray; 
+           border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+           padding: 25px;
+        }
+        label{
+		display: inline-block;
+		text-align: right;
+		float: left;
+	}
+
+	 .form input,input,.x{
+		display: inline-block;
+		text-align: left;
+        float: right;        
+	}
+
+
+</style>
+
+
+
+
+<body>
+    <div class="div2" >
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <h1>Create</h1>
+        <h2>Please fill in this form to create Customer.</h2>
+        <hr>
+        
+        <label for="name"><b>Name</b></label>
+        {{form.name}}
+        <br><br>
+        <label for="email"><b>Email</b></label>
+        {{form.email1}}
+        <br><br>
+        <label for="username"><b>Username</b></label>
+        {{form.username}}
+        <br><br>
+        <label for="phone"><b>Phone number</b></label>
+        {{form.phone}}
+        <br><br>
+        <label for="address"><b>Address</b></label>
+        {{form.address}}
+        <br><br>
+        <button type="submit" class="registerbtn">Create</button>
+      </div>
+    
+      
+      {{form.errors}}
+</form>
+</div>
+</body>
+</html>
+
+{% endblock %}

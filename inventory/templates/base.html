@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+  background-color: rgb(227, 216, 235);
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 4px 4px 4px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #0c0b0b;
+  display: block;
+  transition: 0.3s;
+  border-radius: 10px;
+}
+
+.sidebar a:hover {
+  color: #c7c0c0;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+.button6 {background-color: #ffffff; color: black;}
+</style>
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+    
+ <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
+ <a class="button2" href="{% url 'see_added_stocks_dates' %}">See Stocks btw dates</a><br>
+  <a class="button2" href="{% url 'see_stocks_admin' %}">See Stocks</a><br>
+  <a class="button4" href="{% url 'see_out_stocks_admin' %}">See Checkedout Stocks</a><br>
+  <a class="button2" href="{% url 'see_customers_admin' %}"> See Customers </a><br>
+  <a class="button4" href="{% url 'see_employees' %}"> See Employees </a><br>
+  <a class="button2" href="{% url 'add_employee' %}"> Create Employee </a><br>
+<br><br>
+  <a class="button6" href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div id="main">
+  <!-- <button class="openbtn" onclick="openNav()">☰ MENU</button>  -->
+  {% block content %}
+<h2>Welcome Admin: {{request.user.username}}</h2>
+
+<h1>{{display_text}}</h1>
+{% endblock %}
+</div>
+
+<script>
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+</script>
+   
+</body>
+</html> 

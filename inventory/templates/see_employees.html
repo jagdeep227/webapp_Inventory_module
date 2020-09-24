@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    
+<style>
+
+.btn {
+  border: 2px solid black;
+  background-color: rgb(240, 231, 103);
+  color: black;
+  padding: 7px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.info {
+  border-color: #2196F3;
+  color: dodgerblue;
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+    table {
+      font-family: arial, sans-serif;
+      font-size: 110%;
+      border-collapse: collapse;
+      border: 3px solid black;
+      background-color: rgb(195, 163, 163);
+      width: 60%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 4px;
+      border: 1.1px solid black;
+
+    }
+    
+    tr:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+    .table2 {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid rgb(172, 41, 41);
+      background-color: lightsteelblue;
+      width: 50%;
+    }
+
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+
+    </style>
+<body>
+    
+<h1>All Employees:  </h1>
+<br>
+<div  >
+    <table >
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>           
+            <th>Username</th>    
+            <th>Email</th>                             
+        </tr>
+        {% for j in cust %}
+        <tr>
+        <td>{{j.name}}</td>            
+        <td>{{j.phone}}</td>            
+        <td>{{j.username}}</td>
+        <td>{{j.email1}}</td>                            
+        </tr>        
+    {% endfor %}
+    </table>
+    <br>
+    
+</div>
+</div>
+
+<br>
+<br>
+
+<br>
+<br>
+<br>
+
+    
+
+
+
+</body>
+
+
+
+
+{% endblock %}

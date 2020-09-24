@@ -1,0 +1,39 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+<style>
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:30%;margin:auto;
+          vertical-align: middle;background-color: lightslategray; 
+           border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+           padding: 25px;
+        }
+
+
+</style>
+<div class="div2">
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <h2>Enter username or phone number of customer </h2>
+            <hr>
+            
+           
+            <label for="username"><b>Username or Phone</b></label>
+            {{form.username_or_phone}}
+            <br><br>
+            
+            <button type="submit" class="registerbtn">View</button>
+          </div>
+        
+          {% if message %}
+          {{message}}
+          {% endif %}
+          {{form.errors}}
+    </form>
+    </body>
+</div>
+
+
+
+{% endblock %}

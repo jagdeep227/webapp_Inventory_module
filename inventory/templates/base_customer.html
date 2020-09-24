@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+  background-color: rgb(243, 241, 237);
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(21, 34, 104);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 4px 4px 4px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+
+  border-radius: 10px;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+.button6 {background-color: #ffffff; color: black;}
+
+</style>
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+    
+ <!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
+  
+  <a class="button2" href="{% url 'view_stock' cust.username %}">View Stocks of customer</a><br>
+  <a class="button4" href="{% url 'product_log' cust.username %}"> Product Log </a><br>
+  {% if not request.user.is_superuser %}
+  <a class="button4" href="{% url 'update_customer' cust.username %}">Update Customer</a><br>
+  <a class="button2" href="{% url 'add_stock' cust.username %}">Add stock</a><br>
+  <a class="button2" href="{% url 'checkout' cust.username %}"> Checkout </a><br> 
+  <a class="button4" href="{% url 'GeneratePDF' cust.username %}">Print added invoice</a>
+  <a class="button2" href="{% url 'GeneratePDF2' cust.username %}">Print checkedout invoice</a>
+  <br><br>
+  <a class="button4" href="{% url 'base_employee' %}">Back to Employee page </a>
+  <br>
+  {% endif %}
+  {% if request.user.is_superuser %}
+  <a class="button4" href="{% url 'base' %}">Back to admin page </a>
+  {% endif %}
+</div>
+
+<div id="main">
+<!--<button class="openbtn" onclick="openNav()">☰ MENU</button>  -->
+  <h2>Welcome : {{cust.name}}</h2>
+{% block content %}
+
+{% endblock %}
+</div>
+
+<script>
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+
+</script>
+<h1>{{display_text}}</h1>
+</body>
+</html> 

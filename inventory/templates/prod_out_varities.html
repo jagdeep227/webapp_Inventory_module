@@ -1,0 +1,78 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+
+<br>
+
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid black;
+      
+      width: 60%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      border: 1.1px solid black;
+
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+    </style>
+<body>
+
+
+<br>
+<br>
+{% for i in pp%}
+<h1>{{i.name}}</h1>
+{% endfor %}
+<table class="table">
+    
+    <tr>
+        <th>Name</th>
+        <th>variety name</th>
+        <th>Owner</th>
+        <th>quantity</th>    
+        <th>quantity unit</th>              
+        <th>Price per unit</th>     
+        <th>Added on: </th>      
+        <th>checkout by employee: </th>   
+    </tr>
+
+    {% for i in prods %}
+        <tr>
+            <td>{{i.Product_checkout.name}}</td>            
+            <td>{{i.variety_name}}</td>
+            <td>{{i.owner.username}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.Product_checkout.quant_type}}</td>                        
+            <td>{{i.price_per_unit}}</td>
+            <td>{{i.created_at}}</td>
+            <td>{{i.employee_checkout.username}}</td>          
+        </tr>
+    {% endfor %}
+    
+</table>
+<br>
+<br>
+<br>
+
+    
+
+
+</body>
+
+
+
+
+{% endblock %}

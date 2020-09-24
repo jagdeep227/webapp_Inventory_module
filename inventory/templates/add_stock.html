@@ -1,0 +1,77 @@
+{% extends 'base_customer.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:25%;margin:auto;
+          vertical-align: middle;background-color: lightslategray; 
+           border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+           padding: 3%;
+        }
+         label{
+		display: inline-block;
+		text-align: right;
+        float: left;
+        
+	}
+
+	 .form input,input,.x{
+		display: inline-block;
+		text-align: left;
+        float: right;
+        width:50%;
+	}
+
+
+
+</style>
+<div class="div2"> 
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <h1>Enter Stock details </h1>
+            <hr>
+            
+
+<label><b>Name:             </b></label><input name="name" type="text" list="name" autocomplete="off" />
+   
+<datalist id="name">
+    <label>
+     or select from the list:
+      {% for i in prods %}
+        <option>{{i.name}}</option>
+      {% endfor %}
+     
+    </label>
+   </datalist>
+   
+   
+           <br><br>
+            <label for="variety_name"><b>Variety </b></label>
+            {{form.variety_name}}
+            <br><br>
+            <label  for="quant_type"><b>Quantity Type</b></label>
+            <x class="x">{{form.quant_type}}</x>
+            <br><br>
+            <label for="quantity"><b>Quantity</b></label>
+            {{form.quantity}}
+            <br><br>
+            <label for="prcie_per_unit"><b>Price per unit</b></label>
+            {{form.price_per_unit}}
+            <br><br>
+            
+            <button type="submit" class="registerbtn">Add</button>
+          </div>
+        
+          
+          {{form.errors}}
+    </form>
+    </body>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base_customer.html' %}
+
+{% block content %}
+<!--
+<br>
+<a class = "button" href="{% url 'update_customer' cust.username %}">Update Customer</a>
+<br>
+<a class = "button" href="{% url 'add_stock' cust.username %}">Add stock</a>
+<br>
+<br>
+<a class = "button" href="{% url 'view_stock' cust.username %}">view stock</a>
+<br>
+
+<br>
+<a class = "button" href="{% url 'checkout' cust.username %}">Checkout stock</a>
+
+-->
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      border: 3px solid black;
+      border-radius:10px;background-color: rgb(206, 180, 180);
+      width: 60%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      border: 1.1px solid black;
+
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+.button2 {background-color: #e7e7e7; color: black;}
+.button4 {background-color: #a07878; color: black;}
+    </style>
+<body>
+
+<h1>Customer:  </h1>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>phone</th>
+        <th>Username</th>    
+        <th>Email</th>
+        <th>Address</th>    
+        <th>Added by employee(username)</th>    
+    </tr>
+
+    
+        <tr>
+            <td>{{cust.name}}</td>            
+            <td>{{cust.phone}}</td>
+            <td>{{cust.username}}</td>
+            <td>{{cust.email1}}</td>
+            <td>{{cust.address}}</td>
+            <td>{{cust.employee.username}}</td>            
+        </tr>
+    
+    
+</table>
+
+<br>
+<br>
+
+<h1>Stock:  </h1>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>variety name</th>
+        <th>quantity </th>  
+        <th>Action: </th> 
+        <th>Intial quantity</th>  
+        <th>Net quantity </th>  
+        <th>quantity unit</th>      
+        <th>Price per unit</th>
+        <th>Date-Time: </th>
+        <th>Employee: </th>   
+
+    </tr>
+
+    {% for i in log %}
+        <tr>
+            <td>{{i.name}}</td>            
+            <td>{{i.variety_name}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.added_or_checkedout}}</td>
+            <td>{{i.product_intial_quant}}</td>
+            <td>{{i.product_net_quant}}</td>
+            <td>{{i.quant_type}}</td>        
+            <td>{{i.price_per_unit}}</td>
+            <td>{{i.created_at}}</td>
+            
+            <td>{{i.employee.username}}</td>  
+        </tr>
+    {% endfor %}
+    
+</table>
+<br>
+<br>
+<br>
+
+    
+
+
+</body>
+
+
+
+
+{% endblock %}

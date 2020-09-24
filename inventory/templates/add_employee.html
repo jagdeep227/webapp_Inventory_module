@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body>
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+        
+        <label for="name"><b>Name</b></label>
+        {{form.name}}
+        <br><br>        
+        <br><br>
+        <label for="email"><b>Email</b></label>
+        {{form.email1}}
+        <br><br>
+        <label for="username"><b>Username</b></label>
+        {{form.username}}
+        <br><br>
+        <label for="phone"><b>Phone number</b></label>
+        {{form.phone}}
+        <br><br>
+        <label for="psw"><b>Password</b></label>
+        {{form.password1}}
+        <br><br>
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        {{form.password2}}
+        <hr><br>
+        <br>
+        
+        <button type="submit" class="registerbtn">Create</button>
+      </div>
+    
+      
+      {{form.errors}}
+</form>
+</body>
+</html>
+
