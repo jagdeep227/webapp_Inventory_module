@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html>
+<!DOCTYPE >
+<html>
     <head>
         <title>Stock Details</title>
         <style type="text/css">
@@ -7,13 +8,13 @@
       border-collapse: collapse;
       border: 3px solid black;
       
-      width: 60%;
+      width: 100%;
     }
     
     td, th {
       border: 1px solid #dddddd;
       text-align: left;
-      padding: 8px;
+      padding: 2px;
       border: 1.1px solid black;
 
     }
@@ -68,20 +69,20 @@
             Date-Time: {{ today }}
             <table>
                 <tr>
-                    <td>product Name</td>
-                    <td>product Variety</td>
-                    <td>product Quantity</td>                    
-                    <td>product Quantity type</td>                    
+                    <td>prod Name</td>
+                    <td>prod Variety</td>
+                    <td>prod Quantity</td>                    
+                    <td>prod Quant.type</td>                    
                     <td>price per unit</td>
                     <td>Date added</td>
                 </tr>
             
                 {% for i in prods %}
                 <tr>
-                    <td>{{i.name}}</td>                    
+                    <td>{{i.product.name}}</td>                    
                     <td>{{i.variety_name}}</td>
                     <td>{{i.quantity}}</td>
-                    <td>{{i.quant_type}}</td>
+                    <td>{{i.product.quant_type}}</td>
                     <td>{{i.price_per_unit}}</td>
                     <td>{{i.created_at}}</td>
                    
@@ -91,5 +92,14 @@
             <hr class='hrItem' />
         </div>
     </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.22.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.22.1/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
     </body>
 </html>

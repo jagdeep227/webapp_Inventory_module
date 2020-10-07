@@ -93,9 +93,12 @@ def add_customer(request):
             phone=form.cleaned_data['phone']
             username=form.cleaned_data['username']            
             email1=form.cleaned_data['email1']            
-            address=form.cleaned_data['address']            
+            address=form.cleaned_data['address']
+            user=form.save()
+            group = Group.objects.get(name="customer")
+            user.groups.add(group)            
             employee=Employee.objects.get(user=request.user)
-            Customer.objects.create(address=address,name=name,phone=phone,username=username,email1=email1,employee=employee)
+            Customer.objects.create(user=user,address=address,name=name,phone=phone,username=username,email1=email1,employee=employee)
             message = "New customer is added with username: "+username
             return render(request, 'base_employee.html', {'display_text': message})
     return render(request, 'add_customer.html', {'form': form, 'title': title})
@@ -109,7 +112,7 @@ def view_customer(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin','employee'])
+@allowed_users(allowed_roles=['employee','admin'])
 def view_stock(request,pk):
     cust=Customer.objects.get(username=pk)
     products=Product_variety.objects.filter(owner=cust)
@@ -117,12 +120,37 @@ def view_stock(request,pk):
     return render(request,'view_stock.html',{'cust':cust,'products':products})
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin','employee'])
+@allowed_users(allowed_roles=['employee','admin'])
 def product_log(request,pk):
     customer=Customer.objects.get(username=pk)
     log=Product_log.objects.filter(owner=customer).order_by('-created_at')
     
     return render(request,'product_log.html',{'log':log,'cust':customer})
+
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def home_forcustomer(request):
+    cust=Customer.objects.filter(user=request.user)
+    return render(request,'customer.html',{'cust':cust})
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def view_stock_forcustomer(request,pk):
+    cust=Customer.objects.get(username=pk)
+    products=Product_variety.objects.filter(owner=cust)
+    print(products)
+    return render(request,'view_stock_forcustomer.html',{'cust':cust,'products':products})
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer'])
+def product_log_forcustomer(request,pk):
+    customer=Customer.objects.get(username=pk)
+    log=Product_log.objects.filter(owner=customer).order_by('-created_at')
+    
+    return render(request,'product_log_forcustomer.html',{'log':log,'cust':customer})
+
 
 
 @login_required(login_url='login')
@@ -211,7 +239,7 @@ def add_stock(request,pk):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['employee'])
+@allowed_users(allowed_roles=['employee','admin'])
 def update_customer(request,pk):
     customer=Customer.objects.filter(username=pk)
     form=Update_CustomerForm
@@ -364,16 +392,48 @@ def see_stocks(request):
 def prod_varities_admin(request,pk):
     pp=Product.objects.filter(product_uid=pk)
     prods=Product_variety.objects.filter(product=pp[0])
-    return render(request,'prod_varities_admin.html',{'prods':prods,'pp':pp})
+    labels=[]
+    data=[]
+    for i in prods:
+        labels.append(i.variety_name)
+        data.append(i.quantity)
+    return render(request,'prod_varities_admin.html',{'prods':prods,'pp':pp,'data':data,'labels':labels})
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def see_stocks_admin(request):
+    form=SearchForm
+    if request.method=="POST":
+        form=SearchForm(request.POST)
+        if form.is_valid():
+            product_name=form.cleaned_data['product_name']
+            min_quantity=form.cleaned_data['min_quantity']
+            prods=Product.objects.filter(name=product_name)
+            if prods:
+                check={}
+                kk={}
+                for i in prods:        
+                    prods_variety=Product_variety.objects.filter(product=i,quantity__gte=min_quantity)
+                    cnt=prods_variety.count()
+                    if cnt>10:
+                        prods_variety=prods_variety[:10]
+                        i.chck=1
+                    else:
+                        i.chck=None
+                    check.update({i:prods_variety})
+                return render(request,'see_stocks_admin.html',{'check':check})
+            else: #No product exists
+                messages.error="Not Available"
+                return render(request,'see_stocks_admin.html',{'messages':messages})
     prods=Product.objects.filter()
     check={}
-    kk={}
-    for i in prods:        
+    labels=[]
+    data=[]
+    for i in prods:
+        labels.append(i.name)
+        data.append(i.total_quant)
         prods_variety=Product_variety.objects.filter(product=i)
+        
         cnt=prods_variety.count()
         if cnt>10:
             prods_variety=prods_variety[:10]
@@ -381,8 +441,7 @@ def see_stocks_admin(request):
         else:
             i.chck=None
         check.update({i:prods_variety})
-
-    return render(request,'see_stocks_admin.html',{'check':check})
+    return render(request,'see_stocks_admin.html',{'check':check,'form':form,'labels': labels,'data': data})
 
 
 @login_required(login_url='login')
@@ -421,25 +480,31 @@ def prod_out_varities_admin(request,pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def see_out_stocks_admin(request):
-    prods=Product_checkout.objects.filter()
-    check={}
-    kk={}
-    for i in prods:        
-        prods_variety=Product_variety_checkout.objects.filter(Product_checkout=i)
-        cnt=prods_variety.count()
-        if cnt>10:
-            prods_variety=prods_variety[:10]
-            i.chck=1
-        else:
-            i.chck=None
-        check.update({i:prods_variety})
+    form=DateRangeForm    
+    if request.method=="POST":
+        form=DateRangeForm(request.POST)
+        if form.is_valid():
+            labels=[]
+            data=[]
+            start_date=form.cleaned_data['start_date']
+            end_date=form.cleaned_data['end_date']
+            prods=Product_checkout.objects.filter()
+            check={}
+            kk={}
+            for i in prods:        
+                prods_variety=Product_variety_checkout.objects.filter(Product_checkout=i)
+                labels.append(i.name)
+                data.append(i.total_quant)
+                cnt=prods_variety.count()
+                if cnt>10:
+                    prods_variety=prods_variety[:10]
+                    i.chck=1
+                else:
+                    i.chck=None
+                check.update({i:prods_variety})
 
-    return render(request,'see_out_stocks_admin.html',{'check':check})
-
-
-
-
-
+            return render(request,'see_out_stocks_admin.html',{'check':check,'labels':labels,'data':data})
+    return render(request,'see_out_stocks_admin.html',{'form':form})
 
 
 
@@ -505,3 +570,7 @@ def GeneratePDF3( request,pk):
     pdf = render_to_pdf('invoice3.html', context)
     
     return HttpResponse(pdf, content_type='application/pdf')
+
+
+def testing_css(request):
+    return render(request,'testing_css.html',{})

@@ -1,20 +1,40 @@
-
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<style>
+  .div2{
+        font-family: Arial, Helvetica, sans-serif;width:40%;margin:auto;height:50%;
+        vertical-align: middle;background-color: lightslategray; 
+        border: 2px solid rgb(15, 14, 14);border-radius: 9px;
+        padding: 35px;
+  }
+  label{
+  display: inline-block;
+  text-align: right;
+  float: left;
+  }
+  .form input,input,.x{
+  display: inline-block;
+  text-align: left;
+      float: right;        
+  }
+</style>
+
 <body>
+  <div class="div2">
 <form method="POST">
     {% csrf_token %}
     <div class="container">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
-        <hr>
-        
+        <hr>        
         <label for="name"><b>Name</b></label>
-        {{form.name}}
-        <br><br>        
+        {{form.name}}       
         <br><br>
         <label for="email"><b>Email</b></label>
         {{form.email1}}
@@ -30,15 +50,16 @@
         <br><br>
         <label for="psw-repeat"><b>Repeat Password</b></label>
         {{form.password2}}
-        <hr><br>
-        <br>
-        
+        <br><br>
+        <br>        
         <button type="submit" class="registerbtn">Create</button>
       </div>
     
       
       {{form.errors}}
 </form>
+</div>
 </body>
 </html>
 
+{% endblock %}

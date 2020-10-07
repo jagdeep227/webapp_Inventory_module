@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-    .div2 {font-family: Arial, Helvetica, sans-serif;width:30%;margin:auto;
+    .div2 {font-family: Arial, Helvetica, sans-serif;width:40%;margin:auto;height:50%;
           vertical-align: middle;background-color: lightslategray; 
            border: 2px solid rgb(15, 14, 14);border-radius: 9px;
-           padding: 25px;
+           padding: 35px;
         }
         label{
 		display: inline-block;
@@ -54,6 +54,13 @@
         <label for="address"><b>Address</b></label>
         {{form.address}}
         <br><br>
+        <label for="psw"><b>Password</b></label>
+        {{form.password1}}
+        <br><br>
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        {{form.password2}}
+        <br>
+        <br>
         <button type="submit" class="registerbtn">Create</button>
       </div>
     

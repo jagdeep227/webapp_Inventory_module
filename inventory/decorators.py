@@ -30,6 +30,11 @@ def allowed_users(allowed_roles=[]):
                 if group in roles1:
                     print("Going to base employee")                    
                     return render(request,'base_employee.html',{})
+                roles2=['customer']
+                if group in roles2:
+                    cust=Customer.objects.filter(user=request.user)
+                    print("Going to Customer")                    
+                    return render(request,'customer.html',{'cust':cust[0]})
         return wrapper_func
     return decorator
 

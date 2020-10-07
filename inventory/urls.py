@@ -4,6 +4,7 @@ from . import views
 app_name=''
 
 urlpatterns = [
+    path('testing',views.testing_css,name='tetsing_css'),
     path('', views.base, name='base'),
     path('base_employee/', views.base_employee, name='base_employee'),    
     path('base_customer/<str:pk>/', views.base_customer, name='base_customer'),    
@@ -33,4 +34,8 @@ urlpatterns = [
     path('GeneratePDF2/<str:pk>/',views.GeneratePDF2,name='GeneratePDF2'),
     path('GeneratePDF3/<str:pk>/',views.GeneratePDF3,name='GeneratePDF3'),
     path('checkout/<str:pk>/',views.checkout,name='checkout'),
+    path('home_forcustomer/',views.home_forcustomer,name='home_forcustomer'),
+    path('view_stock_forcustomer/<str:pk>/',views.view_stock_forcustomer,name='view_stock_forcustomer'),
+    path('product_log_forcustomer/<str:pk>/',views.product_log_forcustomer,name='product_log_forcustomer'),
+
 ]

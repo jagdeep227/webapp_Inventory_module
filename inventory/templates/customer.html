@@ -2,10 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
 <style>
-
 
 
 .sidebar {
@@ -15,14 +12,13 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(30, 38, 82);
+  background-color: rgb(21, 34, 104);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
 }
 
 .sidebar a {
-    
   padding: 4px 4px 4px 32px;
   text-decoration: none;
   font-size: 25px;
@@ -71,15 +67,16 @@
   border-radius: 5px;
   border-color: #ecf0ec;
   color: rgb(239, 251, 239);}
-.button4 {background-color: #adadad; color: black;}
+.button4 {background-color: #a07878; color: black;}
 .button6 {background-color: #ffffff; color: black;}
 
-  body {
+body {
       background-color: #93a9c9;
       filter: progid: DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#003073', endColorstr='#029797');
       background-image: url(//img.alicdn.com/tps/TB1d.u8MXXXXXXuXFXXXXXXXXXX-1900-790.jpg);
       background-size: 100%;
     
+  font-family: "Lato", sans-serif;
       background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0, #003073), color-stop(100%, #a0f5f5));
       background-image: -webkit-linear-gradient(135deg, #003073, #a0f5f5);
       background-image: -moz-linear-gradient(45deg, #003073, #a0f5f5);
@@ -88,52 +85,37 @@
       background-image: linear-gradient(135deg, #003073, #a0f5f5);
       
       margin: 0px;
-      overflow:auto ;
+      overflow: auto;
       background-position:center  ;
       
   }
-  
-  
-  </style>
-  
+</style>
 </head>
+<body>
 
 <div id="mySidebar" class="sidebar">
     
  <!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>-->
   
-  <a class="button2" href="{% url 'see_stocks' %}">See Stocks</a><br>
-  <a class="button2" href="{% url 'see_out_stocks' %}">See checkedout stock</a><br>
+  <a class="button2" href="{% url 'view_stock_forcustomer' cust.username %}">View Stocks</a><br>
+  <a class="button2" href="{% url 'product_log_forcustomer' cust.username %}"> Product Log </a><br>
+ <br>
+ <br>
+ <br>
+ <a class="button2" href="{% url 'logout' %}">Logout</a>
 
-  <a class="button2" href="{% url 'open_customer' %}">Open Customer</a><br>
-  <a class="button2" href="{% url 'add_customer' %}"> Create Customer </a><br>
-  <a class="button2" href="{% url 'see_customers' %}">See Customers</a><br>
-  <br><br>
-  <a class="button2" href="{% url 'logout' %}">Logout</a>
 </div>
 
 <div id="main">
 <!--<button class="openbtn" onclick="openNav()">☰ MENU</button>  -->
-<body>
-  
+  <h2>Welcome : {{cust.name}}</h2>
 {% block content %}
-<h2>Welcome Employee: {{request.user.username}}</h2>
-<h1>{{display_text}}</h1>
+
 {% endblock %}
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/7.22.1/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/7.22.1/firebase-analytics.js"></script>
-
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
-</body>
 </div>
 
-  <script>
-      
+<script>
+       
   'use strict';var THREE=THREE||{REVISION:"56"};self.console=self.console||{info:function(){},log:function(){},debug:function(){},warn:function(){},error:function(){}};self.Int32Array=self.Int32Array||Array;self.Float32Array=self.Float32Array||Array;String.prototype.trim=String.prototype.trim||function(){return this.replace(/^\s+|\s+$/g,"")};
   THREE.extend=function(a,b){if(Object.keys)for(var c=Object.keys(b),d=0,e=c.length;d<e;d++){var f=c[d];Object.defineProperty(a,f,Object.getOwnPropertyDescriptor(b,f))}else for(f in c={}.hasOwnProperty,b)c.call(b,f)&&(a[f]=b[f]);return a};
   (function(){for(var a=0,b=["ms","moz","webkit","o"],c=0;c<b.length&&!window.requestAnimationFrame;++c)window.requestAnimationFrame=window[b[c]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[b[c]+"CancelAnimationFrame"]||window[b[c]+"CancelRequestAnimationFrame"];void 0===window.requestAnimationFrame&&(window.requestAnimationFrame=function(b){var c=Date.now(),f=Math.max(0,16-(c-a)),g=window.setTimeout(function(){b(c+f)},f);a=c+f;return g});window.cancelAnimationFrame=window.cancelAnimationFrame||
@@ -861,7 +843,7 @@
    
       function init() {
    
-          container = document.createElement('div8');
+          container = document.createElement('div');
           document.body.appendChild(container);
    
           camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1, 10000);
@@ -998,10 +980,20 @@
    
       }
 
-
   document.getElementById("mySidebar").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
 
-  </script>
-  </meta>
+</script>
+<h1>{{display_text}}</h1>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.22.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="/__/firebase/7.22.1/firebase-analytics.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+</body>
+</meta>
 </html> 

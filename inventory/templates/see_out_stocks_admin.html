@@ -3,6 +3,44 @@
 {% block content %}
 
 
+<div id="container" style="width: 50%;">
+  <canvas id="pie-chart" ></canvas>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    coloR=[];
+     var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         };
+    
+    for (var i in {{data}}) {
+            
+            coloR.push(dynamicColors());
+         }
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor:coloR,
+          label: 'Quantity'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+
+
+  </script>
     
 <style>
 
@@ -51,13 +89,25 @@
       width: 50%;
     }
 
-.button2 {background-color: #e7e7e7; color: black;}
 .button4 {background-color: #a07878; color: black;}
 
     </style>
 <body>
-    
-<h1>Total Stocks:  </h1>
+  <br>
+<br>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if form %}
+  <input type="submit" value="search" />
+{% endif %}
+</form>
+<br>
+<br>
+<br>
+    {% if check %}
+<h1>Checkedout Stocks:  </h1>
+{% endif %}
 {% for key, values in check.items %}
 <table class="table">
     <tr>
@@ -82,7 +132,7 @@
             <th>quantity</th>    
             <th>quantity unit</th>                  
             <th>Price per unit</th>     
-            <th>Added on: </th>      
+            <th>Checkedout on: </th>      
             <th>Owner</th>
             <th>Checkout by employee: </th>              
         </tr>

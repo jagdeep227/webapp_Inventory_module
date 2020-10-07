@@ -1,26 +1,27 @@
-{% extends 'base_customer.html' %}
+{% extends 'customer.html' %}
 
 {% block content %}
-<!--
-<br>
-<a class = "button" href="{% url 'update_customer' cust.username %}">Update Customer</a>
-<br>
-<a class = "button" href="{% url 'add_stock' cust.username %}">Add stock</a>
-<br>
-<br>
-<a class = "button" href="{% url 'view_stock' cust.username %}">view stock</a>
-<br>
 
-<br>
-<a class = "button" href="{% url 'checkout' cust.username %}">Checkout stock</a>
-
--->
 <style>
+    .btn {
+  border: 2px solid black;
+  background-color: rgb(240, 231, 103);
+  color: black;
+  padding: 7px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.info {
+  border-color: #2196F3;
+  color: dodgerblue;
+}
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
       border: 3px solid black;
-      border-radius:10px;background-color: rgb(206, 180, 180);
+      border-radius: 10px;
+      background-color: rgb(202, 173, 173);
       width: 60%;
     }
     
@@ -36,11 +37,18 @@
       background-color: #dddddd;
     }
 
-.button4 {background-color: #a07878; color: black;}
+    .button2 {color: rgb(255, 255, 255);background-color:transparent; border: 2px solid black;
+  border-radius: 5px;
+  border-color: #ecf0ec;
+  color: rgb(239, 251, 239);}.button4 {background-color: #a07878; color: black;}
     </style>
 <body>
 
 <h1>Customer:  </h1>
+
+<br><br>
+<a class = "btn info" href="{% url 'GeneratePDF3' cust.username %}">Take print</a>
+<br><br>
 <table class="table">
     <tr>
         <th>Name</th>
@@ -66,36 +74,29 @@
 
 <br>
 <br>
-
+{{z}}
 <h1>Stock:  </h1>
 <table class="table">
     <tr>
         <th>Name</th>
         <th>variety name</th>
-        <th>quantity </th>  
-        <th>Action: </th> 
-        <th>Intial quantity</th>  
-        <th>Net quantity </th>  
+        <th>quantity</th>    
         <th>quantity unit</th>      
-        <th>Price per unit</th>
-        <th>Date-Time: </th>
-        <th>Employee: </th>   
+        <th>Added on: </th>
+        <th>Price per unit</th>   
+        <th>added by employee: </th>   
 
     </tr>
 
-    {% for i in log %}
+    {% for i in products %}
         <tr>
-            <td>{{i.name}}</td>            
+            <td>{{i.product.name}}</td>            
             <td>{{i.variety_name}}</td>
             <td>{{i.quantity}}</td>
-            <td>{{i.added_or_checkedout}}</td>
-            <td>{{i.product_intial_quant}}</td>
-            <td>{{i.product_net_quant}}</td>
-            <td>{{i.quant_type}}</td>        
-            <td>{{i.price_per_unit}}</td>
+            <td>{{i.product.quant_type}}</td>        
             <td>{{i.created_at}}</td>
-            
-            <td>{{i.employee.username}}</td>  
+            <td>{{i.price_per_unit}}</td>
+            <td>{{i.employee_added.username}}</td>  
         </tr>
     {% endfor %}
     

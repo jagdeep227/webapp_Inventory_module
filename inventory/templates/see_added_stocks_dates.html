@@ -21,8 +21,7 @@
     .info:hover {
       background: #2196F3;
       color: white;
-    }
-    
+    }    
         table {
           font-family: arial, sans-serif;
           border-collapse: collapse;
@@ -31,16 +30,14 @@
           background-color: rgb(207, 171, 171);
           width: 60%;
           font-size:120%;
-        }
-        
+        }        
         td, th {
           border: 1px solid #dddddd;
           text-align: left;
           padding: 4px;
           border: 1.1px solid black;
     
-        }
-        
+        }        
         tr:nth-child(even) {
           background-color: #dddddd;
         }
@@ -50,11 +47,9 @@
           border: 3px solid rgb(172, 41, 41);
           background-color: lightsteelblue;
           width: 50%;
-        }
-    
+        }    
         </style>
-    <body>
-            
+    <body>            
 <br>
 <br>
 <!--<a class=button2 href="{% url 'see_added_stocks_dates' %}">Stocks added between two dates</a>-->
@@ -64,14 +59,16 @@
 <form method="POST">
   {% csrf_token %}
   {{ form.as_p }}
+  {% if form %}
   <input type="submit" value="Create" />
-
+{% endif %}
 </form>
 <br>
 <br>
 <br>
-
+{% if check %}
     <h1>Total Stocks:  </h1>
+    {% endif %}
     {% for key, values in check.items %}
     <table class="table">
         <tr>
@@ -121,8 +118,7 @@
     </div>
     <script>
         function myFunction(a) {
-          var a=arguments[0];
-          
+          var a=arguments[0];          
           var x = document.getElementById(a);
           if (x.style.display === "block") {
             x.style.display = "none";
@@ -131,25 +127,12 @@
           }
         }
         </script>
-    
     <br><br>
     {% endfor %}
     <br>
     <br>
-    
     <br>
     <br>
     <br>
-    
-        
-    
-    
-    
     </body>
-
-
-
-
-
-
 {% endblock %}

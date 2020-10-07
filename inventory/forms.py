@@ -51,7 +51,11 @@ class DateRangeForm(forms.Form):
     class Meta:    
         fields = ['start_date','end_date']
         
-
+class SearchForm(forms.Form):
+    product_name=forms.CharField(max_length=200)
+    min_quantity=forms.IntegerField()
+    class Meta:    
+        fields=['product_name','min_quantity']
 
 class RegistrationFormUser(UserCreationForm):
     name=forms.CharField(max_length=200)                
@@ -64,10 +68,15 @@ class RegistrationFormUser(UserCreationForm):
         fields = ['name','username','phone','email1', 'password1', 'password2']
 
 
-class Add_CustomerForm(ModelForm):    
+class Add_CustomerForm(UserCreationForm): 
+    name=forms.CharField(max_length=200)                
+    phone=forms.CharField(max_length=20)
+    username=forms.CharField(max_length=20)    
+    email1=forms.EmailField()
+    address=forms.CharField(max_length=200)   
     class Meta:
-        model = Customer
-        fields = ['name','username','phone','email1','address']
+        model = User
+        fields = ['name','username','phone','email1','address','password1', 'password2']
 
 class Update_CustomerForm(ModelForm):    
     class Meta:

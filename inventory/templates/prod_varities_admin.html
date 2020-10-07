@@ -4,12 +4,51 @@
 
 <br>
 
+<div id="container" style="width: 50%;">
+  <canvas id="pie-chart" ></canvas>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    coloR=[];
+     var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         };
+    
+    for (var i in {{data}}) {
+            
+            coloR.push(dynamicColors());
+         }
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor:coloR,
+          label: 'Population'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+
+
+  </script>
 <style>
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
       border: 3px solid black;
-      
+      background-color: bisque;
+      border-radius: 10px;
       width: 60%;
     }
     
@@ -17,6 +56,7 @@
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
+      
       border: 1.1px solid black;
 
     }
@@ -25,7 +65,6 @@
       background-color: #dddddd;
     }
 
-.button2 {background-color: #e7e7e7; color: black;}
 .button4 {background-color: #a07878; color: black;}
     </style>
 <body>
@@ -34,7 +73,7 @@
 <br>
 <br>
 {% for i in pp%}
-<h1>{{i.name}}</h1>
+<h2>{{i.name}}</h2>
 {% endfor %}
 <table class="table">
     
